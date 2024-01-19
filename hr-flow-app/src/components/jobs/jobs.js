@@ -26,9 +26,8 @@ const Job = () => {
     const [viewAs , setViewAs] = useState('GRID');
     const [filter, setFilter] = useState(
         localStorage.getItem(AppConst.localStorage.filterKey) ?
-            JSON.parse(localStorage.getItem(AppConst.localStorage.filterKey)) : { name: '', category: '', sort: '' }
+            JSON.parse(localStorage.getItem(AppConst.localStorage.filterKey)) : { name: '', category: '', sort: '' } //get saved filter value from local
     )
-
 
     useEffect(() => {
         setIsLoading(true);
@@ -38,7 +37,6 @@ const Job = () => {
         }
         const getJoblist = async () => {
             const jobs = await getAllJobList(pageProps);
-            console.log(jobs);
             setJobsData(jobs?.data);
             setFilterJobs(jobs?.data);
             setTotal(jobs?.paginationProps.total);
@@ -70,13 +68,13 @@ const Job = () => {
         isInitial ? setFilter(filter) : setFilter(searchValue)
         console.log(filter);
 
-        if (searchValue.name !== '') {
+        if (searchValue?.name !== '') {
             filteredJobsData = filteredJobsData.filter(job => {
                 return job.name.toLowerCase().includes(searchValue.name.toLowerCase()) //check if job contains serach name
             });
         }
 
-        if (searchValue.category !== '') {
+        if (searchValue?.category !== '') {
             filteredJobsData = filteredJobsData.filter((job) => {
                 return job.category.toLowerCase().includes(searchValue.category.toLowerCase()) //check if job contains serach category name
             })
@@ -85,13 +83,13 @@ const Job = () => {
 
         //sort filtered job list
         setTimeout(() => {
-            if (searchValue.sort === 'name') {
+            if (searchValue?.sort === 'name') {
                 setFilterJobs(sortJobsByName(filteredJobsData));
             }
-            if (searchValue.sort === 'category') {
+            if (searchValue?.sort === 'category') {
                 setFilterJobs(sortJobsByCategory(filteredJobsData));
             }
-            if (searchValue.sort === 'creationDate') {
+            if (searchValue?.sort === 'creationDate') {
                 setFilterJobs(sortJobsByCreationDate(filteredJobsData));
             }
 
@@ -136,7 +134,7 @@ const Job = () => {
             setCount(jobs?.paginationProps.count);
             setTimeout(() => {
                 setIsLoading(false);
-                handleSearch()
+                // handleSearch(filter, false)
             }, 1000);
         };
         joblist();
