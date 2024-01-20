@@ -5,7 +5,6 @@ import { Col, Row } from 'antd';
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { MyPointerSensor } from '../../shared/Custom.sensor';
 
 const SortableJobs = ({ job, isExpandAll }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: job.id });
@@ -16,19 +15,21 @@ const SortableJobs = ({ job, isExpandAll }) => {
   }
   return (
     <Col style={style} ref={setNodeRef} {...attributes} {...listeners} key={job.id} xs={24} sm={24} md={12} lg={8} xl={6} xxl={6} className="gutter-row" span={4}>
-      <JobCard style={style} ref={setNodeRef} {...attributes} {...listeners} job={job} isExpandAll={isExpandAll} />
+      <JobCard job={job} isExpandAll={isExpandAll} />
     </Col>
   )
 }
+
+
 const JobList = ({ jobs, isExpandAll,updateJobsOrder }) => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
         activationConstraint: { delay: 100 }
-    }),)
+    }),);
   const onDragEnd = event => {
-
     const { active, over } = event;
-    if (active.id === over.id) {
+
+    if (active?.id === over?.id) {
       return;
     }
     // Assuming you have a function like arrayMove to perform the reorder
