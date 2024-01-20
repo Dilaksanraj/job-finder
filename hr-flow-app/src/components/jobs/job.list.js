@@ -23,7 +23,7 @@ const SortableJobs = ({ job, isExpandAll }) => {
 const JobList = ({ jobs, isExpandAll,updateJobsOrder }) => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
-        activationConstraint: { delay: 500 }
+        activationConstraint: { delay: 100 }
     }),)
   const onDragEnd = event => {
 

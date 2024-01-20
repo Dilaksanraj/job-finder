@@ -12,7 +12,6 @@ import JobListView from "./view/job.list.view";
 const { Content } = Layout;
 const pageSizeOptions = [10]
 
-
 const Job = () => {
 
     const [filterJobs, setFilterJobs] = useState([]);
